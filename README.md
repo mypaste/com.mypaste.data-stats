@@ -1,6 +1,6 @@
 # 数据统计
 
-MyPaste extension `com.mypaste.data-stats` (version `1.0.1`).
+MyPaste extension `com.mypaste.data-stats` (version `1.0.2`).
 
 按内容类型、来源与时间统计当前数据；页面只读取宿主聚合后的计数，不读取条目正文。
 
@@ -10,8 +10,12 @@ The manifest speaks MyPaste plugin protocol v3. Installation, capability mediati
 
 ## Files
 
-- `mypaste.plugin.json`: package identity and capability declaration.
-- `run.sh`, `src/`, `panel.html`, or `run`: package implementation.
+- `mypaste.plugin.json`: package identity, the `stats.read` capability, and the
+  settings-window menu entry (`menus[0]`).
+- `panel.html`: the menu page. It is a surface document with no runtime
+  process; every number it shows comes from the host's `stats.read` aggregate,
+  which only carries counts and form/source labels — never entry text, titles,
+  or paths.
 
 ## License
 

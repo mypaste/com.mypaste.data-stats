@@ -3,7 +3,7 @@
   "kind": "ui",
   "id": "com.mypaste.data-stats",
   "name": "数据统计",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "按内容类型、来源与时间统计当前数据；页面只读取宿主聚合后的计数，不读取条目正文。",
   "capabilities": [
     "stats.read"
