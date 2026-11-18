@@ -62,6 +62,11 @@
   }
   * { box-sizing: border-box; }
   html, body { margin: 0; height: 100%; }
+  /* The root owns the frame's canvas. The host's iframe does not carry the
+     body background past the body box, so in a narrow or short frame — where
+     the page scrolls — the area under the page would show the browser's white
+     canvas instead of the surface the theme names. */
+  html { background: var(--surface-solid); }
   body {
     background: var(--surface-solid);
     color: var(--ink);
@@ -758,7 +763,10 @@
     });
   }
 
+  var themed = false;
+
   function applyTheme(message) {
+    themed = true;
     root.dataset.scheme = message.scheme === "dark" ? "dark" : "light";
     var tokens = message.tokens || {};
     Object.keys(tokens).forEach(function (name) {
@@ -1110,7 +1118,21 @@
   }
 
   refresh.addEventListener("click", function () { load(); });
-  parent.postMessage({ v: 1, type: "ready" }, "*");
+
+  // The host answers `ready` with the theme. A page that mounts while the host
+  // is still setting the frame up can miss that one answer, and until a theme
+  // lands the page falls back to its own white base — which reads as a white
+  // slab on the host's surface. Announcing again is idempotent for the host
+  // (it re-sends the theme it cached), so keep asking until one arrives.
+  (function announceUntilThemed() {
+    var attempts = 0;
+    function announce() {
+      parent.postMessage({ v: 1, type: "ready" }, "*");
+      attempts += 1;
+      if (!themed && attempts < 10) setTimeout(announce, 200);
+    }
+    announce();
+  })();
   load();
 })();
 </script>

@@ -1,6 +1,6 @@
 # 数据统计
 
-MyPaste extension `com.mypaste.data-stats` (version `1.0.2`).
+MyPaste extension `com.mypaste.data-stats` (version `1.0.3`).
 
 按内容类型、来源与时间统计当前数据；页面只读取宿主聚合后的计数，不读取条目正文。
 
