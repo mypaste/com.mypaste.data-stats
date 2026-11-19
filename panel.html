@@ -80,7 +80,10 @@
     height: 100%;
     max-width: 1060px;
     margin: 0 auto;
-    padding: 10px 18px 6px;
+    /* No side gutter of its own: the settings canvas already supplies one
+       (host D-1085, D-1115), and a second one would inset this dashboard
+       against every built-in panel beside it. */
+    padding: 10px 0 6px;
   }
   .head {
     display: flex;
@@ -574,7 +577,7 @@
   }
 
   @media (max-width: 760px) {
-    .page { height: auto; min-height: 100%; padding: 16px 16px 20px; }
+    .page { height: auto; min-height: 100%; padding: 16px 0 20px; }
     .kpis { grid-template-columns: repeat(3, minmax(0, 1fr)); }
     .grid { grid-template-columns: minmax(0, 1fr); grid-template-rows: none; }
     .card-chart, .card-donut, .card-heat, .card-sources, .card-wide {
