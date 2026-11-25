@@ -4,6 +4,17 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>数据统计</title>
+<script>
+  // The host's theme answer is the authority; until it arrives, the system
+  // appearance is the best guess, so a dark host does not flash a light page.
+  (function () {
+    try {
+      if (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) {
+        document.documentElement.dataset.scheme = "dark";
+      }
+    } catch (error) {}
+  })();
+</script>
 <style>
   :root {
     --surface-solid: #ffffff;
@@ -117,6 +128,8 @@
     font-variant-numeric: tabular-nums;
     white-space: nowrap;
   }
+  /* Host form system (D-1098): the icon control is the same 30px quiet
+     button as the text ones — no outline, ink-soft at rest, filled hover. */
   .refresh {
     display: inline-flex;
     align-items: center;
@@ -124,13 +137,16 @@
     width: 30px;
     height: 30px;
     padding: 0;
-    border: 1px solid var(--line);
+    border: 1px solid transparent;
     border-radius: var(--radius-sm);
-    background: var(--surface-raised);
-    color: var(--ink);
+    background: color-mix(in srgb, var(--ink) 6%, var(--surface-raised));
+    color: var(--ink-soft);
     cursor: pointer;
   }
-  .refresh:hover { color: var(--accent); }
+  .refresh:hover {
+    background: color-mix(in srgb, var(--ink) 10%, var(--surface-raised));
+    color: var(--ink);
+  }
   .refresh:focus-visible {
     outline: 2px solid var(--accent);
     outline-offset: 2px;
